@@ -1,0 +1,34 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/styles/test-fragment.css}" rel="stylesheet" />
+    <title>RSS</title>
+</head>
+
+<body>
+    <div class="root-layout">
+        <div th:replace="~{fragments/test-fragment.html :: test-fragment}"></div>
+        <div>
+            <button th:onclick="showAlert()">click me</button>
+        </div>
+        <div>
+            <img th:src="@{/imgs/test.jpg}" alt="background" height="300">
+        </div>
+        <ul th:each="post: ${posts}">
+            <li th:text="${post.id}"></li>
+            <li th:text="${post.title}"></li>
+            <li th:text="${post.createdAt}"></li>
+            <li>
+                <img th:src="${post.background}" alt="background" width="500">
+            </li>
+            <li th:text="${post.userID}"></li>
+            <li th:text="${post.mainContent}"></li>
+            <li th:text="${post.isPrivate}"></li>
+        </ul>
+        <script th:src="@{/js/hood-page.js}"></script>
+    </div>
+</body>
+
+</html>
