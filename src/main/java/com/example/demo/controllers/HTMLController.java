@@ -29,6 +29,7 @@ public class HTMLController {
         List<Post> posts = postDAO.findAll();
 
         model.addAttribute("posts", posts);
+        model.addAttribute("vcnUIGIOIOI", "Bem MI /VCN/ VCN Trans 111");
 
         return "hood-page";
     }
