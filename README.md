@@ -3,8 +3,8 @@
 > Blog web app
 
 ## Mục lục (Table Content):
-- [Các đối tượng có trong ứng dụng](#objects)
-- [Các tính năng của ứng dụng](#features)
+- [Các đối tượng](#objects)
+- [Các tính năng](#features)
 - [Công nghệ sử dụng](#used-techs)
 - [Mẫu giao diện người dùng](#ui-template)
 - [Cấu trúc thư mục trong dự án](#folder-structure)
@@ -14,12 +14,12 @@
   - [Các file](#folder-structure-files)
 - [Quy trình chạy dự án](#app-running-procedure)
 
-## Các đối tượng có trong ứng dụng (Objects): <a name="objects"></a>
+## Các đối tượng (Objects): <a name="objects"></a>
 -	Admin: Quản trị viên
 -	User: Người dùng
 -	Post: Bài đăng
 
-## Các tính năng của ứng dụng (Features): <a name="features"></a>
+## Các tính năng (Features): <a name="features"></a>
 1.	Authentication:
 - Đăng ký: User và Admin có quyền đăng ký tài khoản trên website.
 - Đăng nhập: User và Admin có quyền đăng nhập vào website.
