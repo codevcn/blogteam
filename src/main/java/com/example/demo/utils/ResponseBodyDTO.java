@@ -11,15 +11,33 @@ public class ResponseBodyDTO {
     public static class Success {
 
         String status = "success";
+        String message = "No message...";
 
         public Success() {}
 
         public Success(String message) {
-            this.status = message;
+            this.message = message;
+        }
+
+        public Success(String status, String message) {
+            this.status = status;
+            this.message = message;
         }
 
         public String getStatus() {
             return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 }

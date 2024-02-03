@@ -3,18 +3,15 @@ package com.example.demo.models;
 public class Post {
 
     private int id;
-
     private String title;
-
     private String createdAt;
-
     private String background;
-
     private String userID;
-
     private String mainContent;
-
     private boolean isPrivate;
+    private String categoryID;
+
+    public Post() {}
 
     public Post(
         int id,
@@ -23,7 +20,8 @@ public class Post {
         String background,
         String userID,
         String mainContent,
-        boolean isPrivate
+        boolean isPrivate,
+        String categoryID
     ) {
         this.id = id;
         this.title = title;
@@ -32,9 +30,8 @@ public class Post {
         this.userID = userID;
         this.mainContent = mainContent;
         this.isPrivate = isPrivate;
+        this.categoryID = categoryID;
     }
-
-    public Post() {}
 
     public int getId() {
         return id;
@@ -84,32 +81,19 @@ public class Post {
         this.mainContent = mainContent;
     }
 
-    public boolean getIsPrivate() {
+    public boolean isPrivate() {
         return isPrivate;
     }
 
-    public void setIsPrivate(boolean isPrivate) {
+    public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
 
-    @Override
-    public String toString() {
-        return (
-            "Post [id=" +
-            id +
-            ", title=" +
-            title +
-            ", createdAt=" +
-            createdAt +
-            ", background=" +
-            background +
-            ", userID=" +
-            userID +
-            ", mainContent=" +
-            mainContent +
-            ", isPrivate=" +
-            isPrivate +
-            "]"
-        );
+    public String getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
     }
 }

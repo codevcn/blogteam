@@ -1,10 +1,11 @@
 package com.example.demo.DAOs;
 
 import com.example.demo.models.User;
-import com.example.demo.models.mappers.UserMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,10 +24,10 @@ public class UserDAO {
 
     public List<User> findAll() {
         String sql = "SELECT * FROM " + tableName;
-        return jdbcTemplate.query(sql, new UserMapper());
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(User.class));
     }
 
-    public int create(final User user) {
+    public int create(final @NonNull User user) {
         String sql =
             "INSERT INTO " +
             tableName +
@@ -45,13 +46,17 @@ public class UserDAO {
         );
     }
 
-    public User findById(final String user_email) {
+    public User findById(String user_email) {
         String sql = "SELECT * FROM " + tableName + " WHERE email = ?";
-        User user = jdbcTemplate.queryForObject(sql, new UserMapper(), user_email);
+        User user = jdbcTemplate.queryForObject(
+            sql,
+            BeanPropertyRowMapper.newInstance(User.class),
+            user_email
+        );
         return user;
     }
 
-    public int deleteById(final String user_email) {
+    public int deleteById(String user_email) {
         String sql = "DELETE FROM " + tableName + " WHERE email = ?";
         return jdbcTemplate.update(sql, user_email);
     }

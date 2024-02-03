@@ -1,18 +1,18 @@
 package com.example.demo.models;
 
-public class Review {
+public class Interaction {
 
     private int postID;
     private String userID;
-    private String comment;
+    private boolean likeDislike;
     private String createdAt;
 
-    public Review() {}
+    public Interaction() {}
 
-    public Review(int postID, String userID, String comment, String createdAt) {
+    public Interaction(int postID, String userID, boolean likeDislike, String createdAt) {
         this.postID = postID;
         this.userID = userID;
-        this.comment = comment;
+        this.likeDislike = likeDislike;
         this.createdAt = createdAt;
     }
 
@@ -32,12 +32,12 @@ public class Review {
         this.userID = userID;
     }
 
-    public String getComment() {
-        return comment;
+    public boolean isLikeDislike() {
+        return likeDislike;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setLikeDislike(boolean likeDislike) {
+        this.likeDislike = likeDislike;
     }
 
     public String getCreatedAt() {
@@ -51,12 +51,12 @@ public class Review {
     @Override
     public String toString() {
         return (
-            "Review [postID=" +
+            "Interaction [postID=" +
             postID +
             ", userID=" +
             userID +
-            ", comment=" +
-            comment +
+            ", likeDislike=" +
+            likeDislike +
             ", createdAt=" +
             createdAt +
             "]"

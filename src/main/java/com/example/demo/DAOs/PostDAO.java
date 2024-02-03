@@ -1,10 +1,12 @@
 package com.example.demo.DAOs;
 
 import com.example.demo.models.Post;
-import com.example.demo.models.mappers.PostMapper;
+import com.example.demo.models.joins.PostWithCategory;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,33 +25,57 @@ public class PostDAO {
 
     public List<Post> findAll() {
         String sql = "SELECT * FROM " + tableName;
-        return jdbcTemplate.query(sql, new PostMapper());
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Post.class));
     }
 
-    public int create(final Post post) {
+    public int create(@NonNull Post post) {
         String sql =
             "INSERT INTO " +
             tableName +
-            "(title, background, userID, mainContent, isPrivate)" +
-            " VALUES (?, ?, ?, ?, ?)";
+            "(title, background, userID, mainContent, categoryID, isPrivate)" +
+            " VALUES (?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(
             sql,
             post.getTitle(),
             post.getBackground(),
             post.getUserID(),
             post.getMainContent(),
-            post.getIsPrivate() 
+            post.getCategoryID(),
+            post.isPrivate()
         );
     }
 
-    public Post findById(final int post_id) {
+    public Post findById(int post_id) {
         String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
-        Post post = jdbcTemplate.queryForObject(sql, new PostMapper(), post_id);
+        Post post = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Post.class), post_id);
         return post;
     }
 
-    public int deleteById(final int post_id) {
+    public int deleteById(int post_id) {
         String sql = "DELETE FROM " + tableName + " WHERE id = ?";
         return jdbcTemplate.update(sql, post_id);
+    }
+
+    public void updateCategory(int post_id, String category) {
+        String sql = "UPDATE " + tableName + " SET categoryID = ?" + " WHERE id = ?";
+        jdbcTemplate.update(sql, category, post_id);
+    }
+
+    public List<PostWithCategory> findPostWithCategory(int post_id) {
+        String sql =
+            "SELECT [posts].title, [posts].userID, [posts].categoryID, [categories].id AS mainCategoryID, [categories].[name]" +
+            " FROM [posts] INNER JOIN [categories] ON [posts].[categoryID]=[categories].[id]" +
+            " WHERE [posts].id = ?";
+        List<PostWithCategory> post = jdbcTemplate.query(
+            sql,
+            BeanPropertyRowMapper.newInstance(PostWithCategory.class),
+            post_id
+        );
+        return post;
+    }
+
+    public int deleteByCategory(String category) {
+        String sql = "DELETE FROM " + tableName + " WHERE categoryID = ?";
+        return jdbcTemplate.update(sql, category);
     }
 }

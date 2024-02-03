@@ -1,10 +1,10 @@
 # Website viết blog
 
-> Blog web app
+> Blog Web App.
 
 ## Mục lục (Table Content):
-- [Các đối tượng](#objects)
-- [Các tính năng](#features)
+- [Các đối tượng chính](#objects)
+- [Các tính năng chính](#features)
 - [Công nghệ sử dụng](#used-techs)
 - [Mẫu giao diện người dùng](#ui-template)
 - [Cấu trúc thư mục trong dự án](#folder-structure)
@@ -14,12 +14,15 @@
   - [Các file](#folder-structure-files)
 - [Quy trình chạy dự án](#app-running-procedure)
 
-## Các đối tượng (Objects): <a name="objects"></a>
+## Giới thiệu ứng dụng:
+Một dự án SSR (server side rendering) dựa trên Spring Boot và Java.
+
+## Các đối tượng chính (Objects): <a name="objects"></a>
 -	Admin: Quản trị viên
 -	User: Người dùng
 -	Post: Bài đăng
 
-## Các tính năng (Features): <a name="features"></a>
+## Các tính năng chính (Features): <a name="features"></a>
 1.	Authentication:
 - Đăng ký: User và Admin có quyền đăng ký tài khoản trên website.
 - Đăng nhập: User và Admin có quyền đăng nhập vào website.
@@ -30,8 +33,7 @@
 - User có quyền bình luận và thả like vào các Post của User khác.
 4.	Tìm kiếm:
 -	Tìm theo Post: User có quyền tìm kiếm các Post có trong hệ thống thông qua thanh tìm kiếm.
--	Tìm theo User:
-Admin có quyền tìm kiếm các Post và các User có trong hệ thống thông qua thanh tìm kiếm.
+-	Tìm theo User: Admin có quyền tìm kiếm các Post và các User có trong hệ thống thông qua thanh tìm kiếm.
 
 ## Công nghệ sử dụng (Stack): <a name="used-techs"></a>
 - Ngôn ngữ lập trình:
@@ -46,7 +48,7 @@ Admin có quyền tìm kiếm các Post và các User có trong hệ thống th�
   - SQL Server
 
 ## Mẫu giao diện người dùng (UI Templates): <a name="ui-template"></a>
-*Unkown*
+*Tự thiết kế*
 
 ## Cấu trúc thư mục trong dự án (Folder Structure): <a name="folder-structure"></a>
 
@@ -80,16 +82,16 @@ Admin có quyền tìm kiếm các Post và các User có trong hệ thống th�
 - file `pom.xml`:
   - Đây là hồ sơ của dự án (bộ mặt của dự án), tức là file khai báo các thư viện được sử dụng trong dự án, mô tả cho dự án, tên dự án, phiên bản dự án, các cấu hình để chạy dự án trên môi trường development hoặc production, vân vân...
 - file `run.cmd`:
-  - Đây là file để original command để chạy Spring Boot.
+  - Đây là file chứa original command để chạy Spring Boot.
 
 ## Quy trình chạy dự án (Install & Run): <a name="app-running-procedure"></a>
-Sau khi clone repo từ github về máy, chạy 2 lệnh sau trong CLI (cmd hoặc terminal):
+Sau khi clone repo từ github về máy, chạy các lệnh sau trong CLI (cmd hoặc terminal):
 - cmd:
 ```
 cd ./blogteam
 run.cmd
 ```
-  - terminal:
+- terminal:
 ```
 cd ./blogteam
 ./run

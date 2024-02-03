@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.apis;
 
 import com.example.demo.services.HelloService;
 import com.example.demo.utils.RequestBodyDTO.*;

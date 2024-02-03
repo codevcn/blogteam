@@ -3,21 +3,13 @@ package com.example.demo.models;
 public class User {
 
     private String email;
-
     private String fullName;
-
     private String birthday;
-
     private String gender;
-
     private String address;
-
     private String avatar;
-
     private String password;
-
     private String role;
-
     private String createdAt;
 
     public User() {}

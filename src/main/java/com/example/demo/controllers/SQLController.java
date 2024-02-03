@@ -1,9 +1,13 @@
 package com.example.demo.controllers;
 
+import com.example.demo.DAOs.CategoryDAO;
 import com.example.demo.DAOs.PostDAO;
 import com.example.demo.DAOs.UserDAO;
+import com.example.demo.models.Category;
 import com.example.demo.models.Post;
 import com.example.demo.models.User;
+import com.example.demo.models.joins.PostWithCategory;
+import com.example.demo.utils.ResponseBodyDTO.Success;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,65 +26,85 @@ public class SQLController {
     @Autowired
     UserDAO userDAO;
 
-    @GetMapping
-    public ResponseEntity<List<User>> home() {
-        System.out.printf("\n>>> run this sql controller \n");
+    @Autowired
+    CategoryDAO categoryDAO;
+
+    @GetMapping("posts")
+    public ResponseEntity<Success> posts() {
+        System.out.printf("\n>>> run this sql controller: posts \n");
         System.out.println();
 
-        // // create user 
-        // User new_user = new User();
-        // new_user.setAddress("23 Ha Noi, Phuc Chau, TP.Quang Binh");
-        // new_user.setAvatar("https://i.pinimg.com/originals/b3/0a/f9/b30af9c341665cd68115d496ed70f034.jpg");
-        // new_user.setBirthday("1998-02-28");
-        // new_user.setEmail("user-email-1@mail.ru");
-        // new_user.setFullName("nguyễn ánh nguyệt");
-        // new_user.setGender("nữ");
-        // new_user.setRole("user");
-        // new_user.setPassword("uSer123");
-
-        // int user_create_res = userDAO.create(new_user);
-        // System.out.printf(">>> row created: %d \n", user_create_res);
-
-        // // create post
-        // Post new_post = new Post();
-        // new_post.setBackground(
-        //     "https://c4.wallpaperflare.com/wallpaper/95/659/754/anime-girl-yuri-wallpaper-preview.jpg"
-        // );
-        // new_post.setIsPrivate(false);
-        // new_post.setMainContent(
-        //     "As a genre, yuri does not inherently target a single gender demographic, unlike its male homoerotic counterparts yaoi (marketed towards a female audience) and gay manga (marketed towards a gay male audience). Although yuri originated as a genre targeted towards a female audience, yuri works have been produced that target a male audience, as in manga from Comic Yuri Hime's male-targeted sister magazine Comic Yuri Hime S."
-        // );
-        // new_post.setTitle("What is yuri genre?");
-        // new_post.setUserID("user-email-1@mail.ru");
-
-        // int post_create_res = postDAO.create(new_post);
-        // System.out.printf(">>> row created: %d \n", post_create_res);
+        Post new_post = new Post();
+        new_post.setBackground(
+            "https://static1.srcdn.com/wordpress/wp-content/uploads/2021/03/Feature-Image-Cat-Heroes-in-Movies-.jpg"
+        );
+        new_post.setCategoryID("food");
+        new_post.setPrivate(false);
+        new_post.setMainContent("Trở thành NEET không tốt đâu =((");
+        new_post.setTitle("Hôm nay ăn gì?");
+        new_post.setUserID("user-email-1@mail.ru");
+        postDAO.create(new_post);
 
         // find
-        List<Post> posts = postDAO.findAll();
+        // List<PostWithCategory> post_with_category = postDAO.findPostWithCategory(10);
+        // System.out.printf("\n>>> ::::::::::post_with_category:::::::::::( \n");
+        // System.out.print(post_with_category);
+        // System.out.printf("\n>>> ::::::::::post_with_category:::::::::::) \n");
 
+        // delete
+        // int deleted_count = postDAO.deleteByCategory("food");
+        // System.out.printf("\n>>> deleted_count: %d \n", deleted_count);
+
+        List<Post> posts = postDAO.findAll();
         for (Post post : posts) {
-            System.out.printf("\n>>> single post ( \n");
+            System.out.printf("\n>>> :::::::::: single post :::::::::::( \n");
             System.out.print(post);
-            System.out.printf("\n>>> ) single post \n");
+            System.out.printf("\n>>> :::::::::: single post :::::::::::) \n");
         }
 
-        Post post = postDAO.findById(7);
-        System.out.printf("\n>>> single post ( \n");
-        System.out.print(post);
-        System.out.printf("\n>>> ) single post \n");
+        // int count_posts = postDAO.count();
+        // System.out.printf("\n>>> count posts: %d \n", count_posts);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new Success());
+    }
+
+    @GetMapping("users")
+    public ResponseEntity<Success> users() {
+        System.out.printf("\n>>> run this sql controller: users \n");
+        System.out.println();
 
         List<User> users = userDAO.findAll();
-
         for (User user : users) {
-            System.out.printf("\n>>> single user ( \n");
+            System.out.printf("\n>>> ::::::::::single user:::::::::::( \n");
             System.out.print(user);
-            System.out.printf("\n>>> ) single user \n");
+            System.out.printf("\n>>> ::::::::::single user:::::::::::) \n");
         }
 
-        int count_posts = postDAO.count();
-        System.out.printf(">>> count posts: %d \n", count_posts);
+        return ResponseEntity.status(HttpStatus.OK).body(new Success());
+    }
 
-        return ResponseEntity.status(HttpStatus.OK).body(users);
+    @GetMapping("categories")
+    public ResponseEntity<Success> categories() {
+        System.out.printf("\n>>> run this sql controller: categories \n");
+        System.out.println();
+
+        // delete
+        categoryDAO.deleteById("food");
+
+        // create
+        Category new_category = new Category();
+        new_category.setId("food");
+        new_category.setDescription("Phân loại các bài đăng liên quan đến thực phẩm");
+        new_category.setName("Thực phẩm");
+        categoryDAO.create(new_category);
+
+        List<Category> categories = categoryDAO.findAll();
+        for (Category category : categories) {
+            System.out.printf("\n>>> :::::::::::single category::::::::::( \n");
+            System.out.print(category);
+            System.out.printf("\n>>> :::::::::::single category::::::::::) \n");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new Success());
     }
 }
