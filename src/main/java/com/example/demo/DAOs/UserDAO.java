@@ -31,16 +31,13 @@ public class UserDAO {
         String sql =
             "INSERT INTO " +
             tableName +
-            "(email,fullName,birthday,gender,[address],avatar,[password],[role])" +
-            " VALUES (?,?,?,?,?,?,?,?)";
+            "(email,fullName,gender,[password],[role])" +
+            " VALUES (?,?,?,?,?)";
         return jdbcTemplate.update(
             sql,
             user.getEmail(),
             user.getFullName(),
-            user.getBirthday(),
             user.getGender(),
-            user.getAddress(),
-            user.getAvatar(),
             user.getPassword(),
             user.getRole()
         );

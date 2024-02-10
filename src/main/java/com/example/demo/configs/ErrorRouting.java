@@ -1,5 +1,6 @@
 package com.example.demo.configs;
 
+import com.example.demo.utils.ClientPages;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,6 @@ public class ErrorRouting implements ErrorController {
 
     @RequestMapping("/error")
     public String handleInternalError() {
-        return "500-page";
+        return ClientPages.page500;
     }
 }

@@ -1,27 +1,29 @@
+<!DOCTYPE html>
+
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link th:href="@{/styles/500-page.css}" rel="stylesheet" />
+        <title>[[${appName}]]</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link th:href="@{/styles/500-page.css}" rel="stylesheet" />
-    <title th:text="${appName}"></title>
-</head>
-
-<body>
-    <div id="notfound">
-        <div class="notfound">
-            <div>
-                <div class="notfound-404">
-                    <h1>!</h1>
+    <body>
+        <div id="internal-error">
+            <div class="internal-error">
+                <div>
+                    <div class="internal-error-500">
+                        <h1>!</h1>
+                    </div>
+                    <h2>Error<br />500</h2>
                 </div>
-                <h2>Error<br>500</h2>
+                <p>
+                    <span th:if="${errorMessage} == null">Something went wrong at server...</span>
+                    <span th:unless="${errorMessage} == null">[[${errorMessage}]].</span>
+                    <br />
+                    <a href="/" class="back-to-homepage">Back to homepage.</a>
+                </p>
             </div>
-            <p>
-                Something went wrong at server...
-                <a href="/">Back to homepage</a>
-            </p>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

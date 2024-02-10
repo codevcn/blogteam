@@ -1,0 +1,4 @@
+1. Client:
+  - accounts for login:
+    {email: vivi@gim.me, password: wibu123},
+    {email: tieumuoi@gim.co, password: Tieumuoi123}

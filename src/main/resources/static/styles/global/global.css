@@ -1,0 +1,39 @@
+@import url("fonts.css");
+@import url("variables.css");
+@import url("animations.css");
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+div,
+a,
+p,
+button,
+input {
+    font-family: var(--blgtm-default-fontf);
+    color: var(--blgtm-default-text-cl);
+}
+
+a {
+    text-decoration: none;
+}
+
+p,
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+#layout {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.SweetAlert2-required-dot {
+    color: var(--blgtm-regular-red-cl);
+}

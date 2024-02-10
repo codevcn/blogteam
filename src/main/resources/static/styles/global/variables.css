@@ -1,0 +1,15 @@
+:root {
+    /* color */
+    --blgtm-regular-orange-cl: #f79918;
+    --blgtm-regular-black-cl: rgb(0, 0, 0, 0.9);
+    --blgtm-regular-gray-cl: gray;
+    --blgtm-regular-white-cl: white;
+    --blgtm-regular-lightgray-cl: lightgray;
+    --blgtm-regular-red-cl: rgba(255, 0, 0, 0.9);
+    --blgtm-divider-cl: rgb(229, 229, 229);
+    --blgtm-default-text-cl: black;
+
+    /* font family */
+    --blgtm-default-fontf: "Work Sans regular", Arial, sans-serif;
+    --blgtm-poppins-bold-fontf: "Poppins bold", Arial, sans-serif;
+}

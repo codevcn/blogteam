@@ -1,0 +1,43 @@
+/* =================================================== */
+/* ==================== Poppins ====================== */
+@font-face {
+    font-family: "Poppins bold";
+    src: url("../fonts/poppins/poppins-bold-webfont.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Poppins medium";
+    src: url("../fonts/poppins/poppins-light-webfont.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Poppins light";
+    src: url("../fonts/poppins/poppins-light-webfont.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Poppins thin";
+    src: url("../fonts/poppins/poppins-thin-webfont.woff2") format("woff2");
+}
+
+/* =================================================== */
+/* ==================== Work Sans ==================== */
+@font-face {
+    font-family: "Work Sans bold";
+    src: url("../fonts/worksans/WorkSans-Bold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Work Sans regular";
+    src: url("../fonts/worksans/WorkSans-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Work Sans light";
+    src: url("../fonts/worksans/WorkSans-Light.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Work Sans thin";
+    src: url("../fonts/worksans/WorkSans-Thin.woff2") format("woff2");
+}

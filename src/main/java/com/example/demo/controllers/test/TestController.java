@@ -1,8 +1,5 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.test;
 
-import com.example.demo.services.TestService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,24 +12,16 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("test")
 public class TestController {
 
-    @Autowired
-    TestService testService;
-
-    @GetMapping
-    public ResponseEntity<String> getMethodName() {
-        return testService.todo();
-    }
-
     @GetMapping("/redirectWithRedirectView")
     public RedirectView redirectWithUsingRedirectView(RedirectAttributes attributes) {
         attributes.addFlashAttribute("flashAttributeVCN", "redirectWithRedirectViewVCN");
         attributes.addAttribute("attributeVCN", "redirectWithRedirectViewVCN");
-        return new RedirectView("hood");
+        return new RedirectView("register");
     }
 
-    @GetMapping("/redirectWithRedirectPrefix")
+    @GetMapping({ "/redirectWithRedirectPrefix", "prefixRedirect" })
     public ModelAndView redirectWithUsingRedirectPrefix(ModelMap model) {
         model.addAttribute("attributeVCN", "redirectWithRedirectPrefixVCN");
-        return new ModelAndView("redirect:/hood", model);
-    } 
+        return new ModelAndView("redirect:/register", model);
+    }
 }

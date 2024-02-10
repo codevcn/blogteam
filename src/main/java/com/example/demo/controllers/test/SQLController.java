@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.test;
 
 import com.example.demo.DAOs.CategoryDAO;
 import com.example.demo.DAOs.PostDAO;
@@ -7,7 +7,6 @@ import com.example.demo.models.Category;
 import com.example.demo.models.Post;
 import com.example.demo.models.User;
 import com.example.demo.models.joins.PostWithCategory;
-import com.example.demo.utils.ResponseBodyDTO.Success;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,26 +29,26 @@ public class SQLController {
     CategoryDAO categoryDAO;
 
     @GetMapping("posts")
-    public ResponseEntity<Success> posts() {
+    public ResponseEntity<String> posts() {
         System.out.printf("\n>>> run this sql controller: posts \n");
         System.out.println();
 
-        Post new_post = new Post();
-        new_post.setBackground(
-            "https://static1.srcdn.com/wordpress/wp-content/uploads/2021/03/Feature-Image-Cat-Heroes-in-Movies-.jpg"
-        );
-        new_post.setCategoryID("food");
-        new_post.setPrivate(false);
-        new_post.setMainContent("Trở thành NEET không tốt đâu =((");
-        new_post.setTitle("Hôm nay ăn gì?");
-        new_post.setUserID("user-email-1@mail.ru");
-        postDAO.create(new_post);
+        // Post new_post = new Post();
+        // new_post.setBackground(
+        //     "https://static1.srcdn.com/wordpress/wp-content/uploads/2021/03/Feature-Image-Cat-Heroes-in-Movies-.jpg"
+        // );
+        // new_post.setCategoryID("food");
+        // new_post.setPrivate(false);
+        // new_post.setMainContent("Trở thành NEET không tốt đâu =((");
+        // new_post.setTitle("Hôm nay ăn gì?");
+        // new_post.setUserID("user-email-1@mail.ru");
+        // postDAO.create(new_post);
 
         // find
-        // List<PostWithCategory> post_with_category = postDAO.findPostWithCategory(10);
-        // System.out.printf("\n>>> ::::::::::post_with_category:::::::::::( \n");
-        // System.out.print(post_with_category);
-        // System.out.printf("\n>>> ::::::::::post_with_category:::::::::::) \n");
+        List<PostWithCategory> post_with_category = postDAO.findPostWithCategory(10);
+        System.out.printf("\n>>> ::::::::::post_with_category:::::::::::( \n");
+        System.out.print(post_with_category);
+        System.out.printf("\n>>> ::::::::::post_with_category:::::::::::) \n");
 
         // delete
         // int deleted_count = postDAO.deleteByCategory("food");
@@ -65,11 +64,11 @@ public class SQLController {
         // int count_posts = postDAO.count();
         // System.out.printf("\n>>> count posts: %d \n", count_posts);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new Success());
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
     @GetMapping("users")
-    public ResponseEntity<Success> users() {
+    public ResponseEntity<String> users() {
         System.out.printf("\n>>> run this sql controller: users \n");
         System.out.println();
 
@@ -80,11 +79,11 @@ public class SQLController {
             System.out.printf("\n>>> ::::::::::single user:::::::::::) \n");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new Success());
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
     @GetMapping("categories")
-    public ResponseEntity<Success> categories() {
+    public ResponseEntity<String> categories() {
         System.out.printf("\n>>> run this sql controller: categories \n");
         System.out.println();
 
@@ -105,6 +104,6 @@ public class SQLController {
             System.out.printf("\n>>> :::::::::::single category::::::::::) \n");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new Success());
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 }
