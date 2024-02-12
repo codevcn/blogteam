@@ -34,12 +34,12 @@ public class SearchDAO {
 
     public Search findById(int search_id) {
         String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
-        Search search = jdbcTemplate.queryForObject(
+        List<Search> searches = jdbcTemplate.query(
             sql,
             BeanPropertyRowMapper.newInstance(Search.class),
             search_id
         );
-        return search;
+        return searches.size() == 0 ? null : searches.get(0);
     }
 
     public int deleteById(int search_id) {

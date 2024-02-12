@@ -41,13 +41,13 @@ public class ReviewDAO {
 
     public Review findOne(int post_id, String user_id) {
         String sql = "SELECT * FROM " + tableName + " WHERE postID = ? AND userID = ?";
-        Review review = jdbcTemplate.queryForObject(
+        List<Review> reviews = jdbcTemplate.query(
             sql,
             BeanPropertyRowMapper.newInstance(Review.class),
             post_id,
             user_id
         );
-        return review;
+        return reviews.size() == 0 ? null : reviews.get(0);
     }
 
     public int deleteById(int post_id, String user_id) {

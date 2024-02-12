@@ -19,3 +19,13 @@ const validate_form = () => {
 
     return check_required_inputs({ email, password });
 };
+
+const auto_fill_form = (is_fill) => {
+    if (is_fill) {
+        form.querySelector("input[name='email']").value = "vivi@gim.me";
+        form.querySelector("input[name='password']").value = "wibu123";
+    } else {
+        form.querySelector("input[name='email']").value = "";
+        form.querySelector("input[name='password']").value = "";
+    }
+};

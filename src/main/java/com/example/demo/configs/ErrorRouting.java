@@ -1,6 +1,6 @@
 package com.example.demo.configs;
 
-import com.example.demo.utils.ClientPages;
+import com.example.demo.utils.client.ClientPages;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
-import com.example.demo.services.AppInfoService;
+import com.example.demo.configs.props.AppInfoProps;
+import com.example.demo.utils.client.ClientGlobalVarNames;
+import com.example.demo.utils.client.ClientPages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +12,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @Autowired
-    private AppInfoService appInfoService;
+    private AppInfoProps appInfoService;
 
     @GetMapping({ "/", "/home" })
     public String homePage(Model model) {
-        model.addAttribute("appName", appInfoService.getAppName());
-        return "home-page";
+        model.addAttribute(ClientGlobalVarNames.appName, appInfoService.getAppName());
+        return ClientPages.homePage;
+    }
+
+    @GetMapping("/contact")
+    public String contactPage(Model model) {
+        model.addAttribute(ClientGlobalVarNames.appName, appInfoService.getAppName());
+        return ClientPages.contactPage;
     }
 }

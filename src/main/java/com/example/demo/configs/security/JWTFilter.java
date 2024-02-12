@@ -1,6 +1,8 @@
 package com.example.demo.configs.security;
 
-import com.example.demo.utils.JWTUtil;
+import com.example.demo.configs.props.JWTProps;
+import com.example.demo.services.CookieService;
+import com.example.demo.services.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,7 +23,13 @@ public class JWTFilter extends OncePerRequestFilter {
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
-    private JWTUtil jwtUtil;
+    private JWTService jwtService;
+
+    @Autowired
+    private JWTProps jwtProps;
+
+    @Autowired
+    private CookieService cookieService;
 
     @Override
     public void doFilterInternal(
@@ -30,24 +37,22 @@ public class JWTFilter extends OncePerRequestFilter {
         @NonNull HttpServletResponse response,
         @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        final String authorizationHeader = request.getHeader("Authorization");
-
         String userId = null;
-        String token = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            token = authorizationHeader.substring(7);
+        String jwt = cookieService.extractCookie(request.getCookies(), jwtProps.getAUTH_JWT_NAME());
+
+        if (jwt != null && jwt.isEmpty() == false) {
             try {
-                userId = jwtUtil.extractUsername(token);
+                userId = jwtService.extractUserId(jwt);
             } catch (Exception exception) {
-                System.out.println("Error extracting user id from token: " + exception.getMessage());
+                System.out.println("\n>>> Fail to verify token: " + exception.getMessage());
             }
         }
 
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
+            CustomUserDetails userDetails = userDetailsService.loadUserByUsername(userId);
 
-            if (jwtUtil.validateToken(token, userDetails)) {
+            if (jwtService.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     userDetails,
                     null,

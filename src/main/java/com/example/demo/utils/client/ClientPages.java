@@ -1,4 +1,4 @@
-package com.example.demo.utils;
+package com.example.demo.utils.client;
 
 public class ClientPages {
 
@@ -8,4 +8,5 @@ public class ClientPages {
     public static final String loginPage = "login-page";
     public static final String registerPage = "register-page";
     public static final String accountPage = "account-page";
+    public static final String contactPage = "contact-page";
 }

@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public void createAccount(@NonNull CreateAccountDTO createAccountDTO) throws AuthException {
-        User exitingUser = userDAO.findById(createAccountDTO.getEmail());
+        User exitingUser = findUserByEmail(createAccountDTO.getEmail());
         if (exitingUser != null) {
             throw new AuthException(AuthMessage.EXISTING_EMAIL);
         }
@@ -35,5 +35,9 @@ public class UserService {
         user.setRole("user");
 
         userDAO.create(user);
+    }
+
+    public User findUserByEmail(String email) {
+        return userDAO.findById(email);
     }
 }

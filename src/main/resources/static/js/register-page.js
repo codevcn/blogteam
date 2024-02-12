@@ -109,10 +109,18 @@ const clearMessage = (target) => {
     target.closest(".form-group").querySelector(".message").innerHTML = "";
 };
 
-const auto_fill_form = () => {
-    form.querySelector("input[name='fullName']").value = "alan mog 123";
-    form.querySelector("input[name='email']").value = "vivi@gim.me";
-    form.querySelector("input[name='password']").value = "wibu123";
-    form.querySelector("input[name='retypePassword']").value = "wibu123";
-    form.querySelector("select[name='gender']").value = "male";
+const auto_fill_form = (is_fill) => {
+    if (is_fill) {
+        form.querySelector("input[name='fullName']").value = "alan mog 123";
+        form.querySelector("input[name='email']").value = "vivi@gim.me";
+        form.querySelector("input[name='password']").value = "wibu123";
+        form.querySelector("input[name='retypePassword']").value = "wibu123";
+        form.querySelector("select[name='gender']").value = "male";
+    } else {
+        form.querySelector("input[name='fullName']").value = "";
+        form.querySelector("input[name='email']").value = "";
+        form.querySelector("input[name='password']").value = "";
+        form.querySelector("input[name='retypePassword']").value = "";
+        form.querySelector("select[name='gender']").value = "";
+    }
 };

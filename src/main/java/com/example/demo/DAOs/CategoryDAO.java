@@ -34,12 +34,12 @@ public class CategoryDAO {
 
     public Category findById(String category_id) {
         String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
-        Category category = jdbcTemplate.queryForObject(
+        List<Category> categories = jdbcTemplate.query(
             sql,
             BeanPropertyRowMapper.newInstance(Category.class),
             category_id
         );
-        return category;
+        return categories.size() == 0 ? null : categories.get(0);
     }
 
     public int deleteById(String category_id) {

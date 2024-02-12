@@ -41,12 +41,12 @@ public class InteractionDAO {
 
     public Interaction findOne(int post_id, String user_id) {
         String sql = "SELECT * FROM " + tableName + " WHERE postID = ? AND userID = ?";
-        Interaction interaction = jdbcTemplate.queryForObject(
+        List<Interaction> interactions = jdbcTemplate.query(
             sql,
             BeanPropertyRowMapper.newInstance(Interaction.class),
             post_id,
             user_id
         );
-        return interaction;
+        return interactions.size() == 0 ? null : interactions.get(0);
     }
 }

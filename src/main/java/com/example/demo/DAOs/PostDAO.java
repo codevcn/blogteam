@@ -47,8 +47,8 @@ public class PostDAO {
 
     public Post findById(int post_id) {
         String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
-        Post post = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Post.class), post_id);
-        return post;
+        List<Post> posts = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Post.class), post_id);
+        return posts.size() == 0 ? null : posts.get(0);
     }
 
     public int deleteById(int post_id) {

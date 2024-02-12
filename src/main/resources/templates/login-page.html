@@ -6,12 +6,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link th:href="@{/styles/global/global.css}" rel="stylesheet" />
         <link th:href="@{/styles/fragments/fragments.css}" rel="stylesheet" />
+        <link th:href="@{/styles/libs/SweetAlert2.css}" rel="stylesheet" />
         <link th:href="@{/styles/login-page.css}" rel="stylesheet" />
         <title>[[${appName}]]</title>
     </head>
 
     <body>
         <div th:replace="~{fragments/nav-bar.html :: nav-bar}"></div>
+
+        <div
+            style="
+                position: fixed;
+                top: 150px;
+                right: 50px;
+                border-radius: 50%;
+                border: 2px black solid;
+                padding: 10px;
+                cursor: pointer;
+            "
+            onclick="auto_fill_form(true)"
+        >
+            Auto
+        </div>
 
         <div id="layout">
             <div class="form-section">
@@ -25,7 +41,7 @@
 
                 <div class="description">Thỏa sức sáng tạo và xuất bản những ý tưởng táo bạo của bạn</div>
 
-                <form class="form" action="/login" method="post" onsubmit="return validate_form()">
+                <form class="form" th:action="@{/login}" method="post" onsubmit="return validate_form()">
                     <div class="horizon-bar">
                         <div class="text">Đăng nhập</div>
                     </div>
@@ -66,7 +82,7 @@
             const error = /*[[${error}]]*/ null;
             if (error !== null) {
                 toastify.error({
-                    title: "Đăng ký thất bại",
+                    title: "Đăng nhập thất bại",
                     msg: error,
                 });
             }

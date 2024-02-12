@@ -26,12 +26,14 @@
                     những trải nghiệm, ý kiến, và kiến thức của mình. Hãy thỏa sức vùng vẫy nhé!
                 </p>
 
-                <div class="shopping-now-btn">
+                <div class="shopping-now-btn" onclick="getStartedNow()">
                     <svg th:replace="~{fragments/icons.html :: arrow-down-icon}"></svg>
                 </div>
             </div>
 
             <h2 class="most-searching">Tìm kiếm nhiều nhất</h2>
         </div>
+
+        <script th:src="@{/js/home-page.js}" charset="UTF-8"></script>
     </body>
 </html>
