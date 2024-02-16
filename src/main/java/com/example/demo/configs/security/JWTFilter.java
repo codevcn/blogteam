@@ -11,6 +11,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -37,20 +38,40 @@ public class JWTFilter extends OncePerRequestFilter {
         @NonNull HttpServletResponse response,
         @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        String userId = null;
+        String jwt = extractJWTFromRequest(request);
+        String userId = extractUserIdFromJWT(jwt);
 
-        String jwt = cookieService.extractCookie(request.getCookies(), jwtProps.getAUTH_JWT_NAME());
+        validateJWT(request, userId, jwt);
 
+        filterChain.doFilter(request, response);
+    }
+
+    private String extractJWTFromRequest(@NonNull HttpServletRequest request) {
+        return cookieService.extractCookie(request.getCookies(), jwtProps.getAUTH_JWT_NAME());
+    }
+
+    private String extractUserIdFromJWT(String jwt) {
         if (jwt != null && jwt.isEmpty() == false) {
             try {
-                userId = jwtService.extractUserId(jwt);
+                return jwtService.extractUserId(jwt);
             } catch (Exception exception) {
-                System.out.println("\n>>> Fail to verify token: " + exception.getMessage());
+                System.out.printf("\n>>> Fail to verify token: %s\n", exception.getMessage());
             }
         }
+        return null;
+    }
 
-        if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+    private void validateJWT(@NonNull HttpServletRequest request, String userId, String jwt) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.printf("\n>>> authentication:\n");
+        System.out.print(authentication);
+        System.out.printf("\n\n");
+
+        if (userId != null && authentication == null) {
             CustomUserDetails userDetails = userDetailsService.loadUserByUsername(userId);
+            System.out.printf("\n>>> user details:\n");
+            System.out.print(userDetails);
+            System.out.printf("\n\n");
 
             if (jwtService.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -64,7 +85,5 @@ public class JWTFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
-
-        filterChain.doFilter(request, response);
     }
 }

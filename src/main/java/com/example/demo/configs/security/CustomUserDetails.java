@@ -1,10 +1,12 @@
 package com.example.demo.configs.security;
 
+import com.example.demo.models.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @ToString
@@ -15,11 +17,13 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private List<GrantedAuthority> authorities;
 
-    public CustomUserDetails(String fullName, String email, String password, String role) {
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
-        this.authorities = new ArrayList<>();
+    public CustomUserDetails(User user) {
+        this.fullName = user.getFullName();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().toUpperCase()));
+        this.authorities = authorities;
     }
 
     @Override

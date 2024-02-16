@@ -17,7 +17,7 @@ const check_required_inputs = ({ fullName, email, password, retypePassword }) =>
     ) {
         toastify.error({
             title: "Đăng ký thất bại",
-            html: 'Vui lòng không bỏ trống bất kì trường nào. Các trường với <span class="SweetAlert2-required-dot">*</span> là bắt buộc!',
+            html: 'Vui lòng không bỏ trống bất kì trường nào. Các trường với <span class="SweetAlert2-required-dot-description">*</span> là bắt buộc!',
         });
         return false;
     }

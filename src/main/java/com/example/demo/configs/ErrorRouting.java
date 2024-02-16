@@ -10,6 +10,6 @@ public class ErrorRouting implements ErrorController {
 
     @RequestMapping("/error")
     public String handleInternalError() {
-        return ClientPages.page500;
+        return ClientPages.internalErrorPage;
     }
 }

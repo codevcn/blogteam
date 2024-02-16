@@ -26,6 +26,9 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Autowired
+    private CustomAuthEntryPoint customAuthEntryPoint;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -39,6 +42,7 @@ public class SecurityConfig {
                     .anyRequest()
                     .authenticated()
             )
+            .exceptionHandling(exHdlng -> exHdlng.authenticationEntryPoint(customAuthEntryPoint))
             .logout(logout -> logout.logoutUrl("/logout").permitAll().logoutSuccessUrl("/"))
             .sessionManagement(ssMgmtCt -> ssMgmtCt.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

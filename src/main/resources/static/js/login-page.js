@@ -20,6 +20,19 @@ const validate_form = () => {
     return check_required_inputs({ email, password });
 };
 
+const hide_show_password = (is_shown) => (target) => {
+    const sibling_input = target.parentElement.querySelector("input");
+    if (is_shown) {
+        sibling_input.type = "text";
+        target.style.display = "none";
+        target.nextElementSibling.style.display = "block";
+    } else {
+        sibling_input.type = "password";
+        target.style.display = "none";
+        target.previousElementSibling.style.display = "block";
+    }
+};
+
 const auto_fill_form = (is_fill) => {
     if (is_fill) {
         form.querySelector("input[name='email']").value = "vivi@gim.me";

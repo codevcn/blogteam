@@ -123,7 +123,8 @@ public class AuthController {
     }
 
     @GetMapping("account")
-    public String accountPage() {
+    public String accountPage(Model model) {
+        model.addAttribute(ClientGlobalVarNames.appName, appInfoProps.getAppName());
         return ClientPages.accountPage;
     }
 }
