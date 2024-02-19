@@ -21,4 +21,6 @@ public class Post {
     private String mainContent;
     private boolean isPrivate;
     private String categoryID;
+    private boolean deleted;
+    private String updateAt;
 }

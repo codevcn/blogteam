@@ -63,6 +63,10 @@
     position: relative;
 }
 
+.form-group .required-dot {
+    color: var(--blgtm-regular-red-cl);
+}
+
 .form-group .input-wrapper .password-btn {
     position: absolute;
     right: 10px;
@@ -86,7 +90,7 @@
     margin-top: 5px;
     padding: 10px;
     outline: none;
-    border: 2px solid var(--blgtm-regular-lightgray-cl);
+    border: 2px solid var(--blgtm-lightgray-cl);
     border-radius: 5px;
     width: 100%;
     box-sizing: border-box;

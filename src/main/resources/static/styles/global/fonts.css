@@ -16,8 +16,8 @@
 }
 
 @font-face {
-    font-family: "Poppins thin";
-    src: url("../fonts/poppins/poppins-thin-webfont.woff2") format("woff2");
+    font-family: "Poppins regular";
+    src: url("../fonts/poppins/poppins-regular-webfont.woff2") format("woff2");
 }
 
 /* =================================================== */
@@ -40,4 +40,26 @@
 @font-face {
     font-family: "Work Sans thin";
     src: url("../fonts/worksans/WorkSans-Thin.woff2") format("woff2");
+}
+
+/* =================================================== */
+/* ==================== Roboto ==================== */
+@font-face {
+    font-family: "Roboto bold";
+    src: url("../fonts/roboto/roboto-bold-webfont.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Roboto regular";
+    src: url("../fonts/roboto/roboto-regular-webfont.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Roboto light";
+    src: url("../fonts/roboto/roboto-light-webfont.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Roboto thin";
+    src: url("../fonts/roboto/roboto-thin-webfont.woff2") format("woff2");
 }

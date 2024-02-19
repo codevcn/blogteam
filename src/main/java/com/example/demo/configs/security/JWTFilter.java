@@ -38,6 +38,8 @@ public class JWTFilter extends OncePerRequestFilter {
         @NonNull HttpServletResponse response,
         @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        System.out.printf("\n>>> got a request\n");
+
         String jwt = extractJWTFromRequest(request);
         String userId = extractUserIdFromJWT(jwt);
 
@@ -63,15 +65,9 @@ public class JWTFilter extends OncePerRequestFilter {
 
     private void validateJWT(@NonNull HttpServletRequest request, String userId, String jwt) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.printf("\n>>> authentication:\n");
-        System.out.print(authentication);
-        System.out.printf("\n\n");
 
         if (userId != null && authentication == null) {
             CustomUserDetails userDetails = userDetailsService.loadUserByUsername(userId);
-            System.out.printf("\n>>> user details:\n");
-            System.out.print(userDetails);
-            System.out.printf("\n\n");
 
             if (jwtService.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(

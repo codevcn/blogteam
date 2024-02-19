@@ -1,3 +1,7 @@
+const queryStringGetter = (param) => {
+    return new URLSearchParams(window.location.search).get(param);
+};
+
 const toastify = {
     error: ({ title, msg, html }) => {
         Swal.fire({

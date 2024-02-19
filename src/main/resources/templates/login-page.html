@@ -84,14 +84,14 @@
 
         <script th:src="@{/js/libs/SweetAlert2.js}" charset="UTF-8"></script>
         <script th:src="@{/js/utils/constants.js}" charset="UTF-8"></script>
-        <script th:src="@{/js/utils/toastify.js}" charset="UTF-8"></script>
+        <script th:src="@{/js/utils/helpers.js}" charset="UTF-8"></script>
         <script th:src="@{/js/login-page.js}" charset="UTF-8"></script>
 
         <script th:inline="javascript" charset="UTF-8">
             let error = /*[[${error}]]*/ null;
 
             if (error == null) {
-                error = new URLSearchParams(window.location.search).get("error");
+                error = queryStringGetter("error");
             }
 
             if (error !== null && error !== "") {
