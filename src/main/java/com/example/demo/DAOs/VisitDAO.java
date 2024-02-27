@@ -1,6 +1,6 @@
 package com.example.demo.DAOs;
 
-import com.example.demo.models.Search;
+import com.example.demo.models.Visit;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -9,9 +9,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SearchDAO {
+public class VisitDAO {
 
-    private final String tableName = "searches";
+    private final String tableName = "visits";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -22,21 +22,21 @@ public class SearchDAO {
         return count == null ? 0 : count;
     }
 
-    public List<Search> findAll() {
+    public List<Visit> findAll() {
         String sql = "SELECT * FROM " + tableName;
-        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Search.class));
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Visit.class));
     }
 
-    public int create(final @NonNull Search search) {
-        String sql = "INSERT INTO " + tableName + "(postID, createdAt)" + " VALUES (?, ?)";
-        return jdbcTemplate.update(sql, search.getPostID(), search.getCreatedAt());
+    public int create(final @NonNull Visit search) {
+        String sql = "INSERT INTO " + tableName + "(postID)" + " VALUES (?)";
+        return jdbcTemplate.update(sql, search.getPostID());
     }
 
-    public Search findById(int search_id) {
+    public Visit findById(int search_id) {
         String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
-        List<Search> searches = jdbcTemplate.query(
+        List<Visit> searches = jdbcTemplate.query(
             sql,
-            BeanPropertyRowMapper.newInstance(Search.class),
+            BeanPropertyRowMapper.newInstance(Visit.class),
             search_id
         );
         return searches.size() == 0 ? null : searches.get(0);

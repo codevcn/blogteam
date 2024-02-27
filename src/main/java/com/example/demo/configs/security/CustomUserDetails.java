@@ -22,7 +22,7 @@ public class CustomUserDetails implements UserDetails {
         this.email = user.getEmail();
         this.password = user.getPassword();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().toUpperCase()));
+        authorities.add(new SimpleGrantedAuthority(user.getRoleID().toUpperCase()));
         this.authorities = authorities;
     }
 

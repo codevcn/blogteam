@@ -29,14 +29,14 @@ public class UserDAO {
 
     public int create(final @NonNull User user) {
         String sql =
-            "INSERT INTO " + tableName + "(email,fullName,gender,[password],[role])" + " VALUES (?,?,?,?,?)";
+            "INSERT INTO " + tableName + "(email,fullName,gender,[password],roleID)" + " VALUES (?,?,?,?,?)";
         return jdbcTemplate.update(
             sql,
             user.getEmail(),
             user.getFullName(),
             user.getGender(),
             user.getPassword(),
-            user.getRole()
+            user.getRoleID()
         );
     }
 

@@ -41,5 +41,5 @@ public class CreateBlogDTO {
     private String mainContent;
 
     @NotBlank(message = "Trường id phân loại không thể thiếu")
-    private String categoryID;
+    private String hashtag;
 }

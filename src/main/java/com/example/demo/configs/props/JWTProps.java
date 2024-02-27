@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "rss.jwt")
+@ConfigurationProperties(prefix = "blgtm.jwt")
 @Getter
 @Setter
 public class JWTProps {

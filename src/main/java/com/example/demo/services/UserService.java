@@ -32,7 +32,7 @@ public class UserService {
         user.setFullName(createAccountDTO.getFullName());
         user.setGender(createAccountDTO.getGender());
         user.setPassword(encodePassword(createAccountDTO.getPassword()));
-        user.setRole("user");
+        user.setRoleID("user");
 
         userDAO.create(user);
     }

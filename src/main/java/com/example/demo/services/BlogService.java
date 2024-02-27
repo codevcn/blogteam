@@ -20,11 +20,11 @@ public class BlogService {
             "https://topshare.com.vn/htdocs/images/newsen/2020/03/06/800/sai_gioi_tinh_dung_tinh_yeu_bach_hop_review.jpg";
 
         post.setBackground(cover_img_url);
-        post.setCategoryID(createBlogDTO.getCategoryID());
+        post.setHashtag(createBlogDTO.getHashtag());
         post.setMainContent(createBlogDTO.getMainContent());
         post.setTitle(createBlogDTO.getTitle());
         post.setUserID(principal.getName());
-        post.setPrivate(false);
+        post.setIsPrivate(false);
 
         postDAO.create(post);
     }

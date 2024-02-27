@@ -28,15 +28,8 @@ public class ReviewDAO {
     }
 
     public int create(final @NonNull Review review) {
-        String sql =
-            "INSERT INTO " + tableName + "(postID, userID, comment, createdAt)" + " VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(
-            sql,
-            review.getPostID(),
-            review.getUserID(),
-            review.getComment(),
-            review.getCreatedAt()
-        );
+        String sql = "INSERT INTO " + tableName + "(postID, userID, comment)" + " VALUES (?, ?, ?)";
+        return jdbcTemplate.update(sql, review.getPostID(), review.getUserID(), review.getComment());
     }
 
     public Review findOne(int post_id, String user_id) {

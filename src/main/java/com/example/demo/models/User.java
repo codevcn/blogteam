@@ -18,7 +18,7 @@ public class User {
     private String gender;
     private String avatar;
     private String password;
-    private String role;
+    private String roleID;
     private String createdAt;
     private String updatedAt;
 }

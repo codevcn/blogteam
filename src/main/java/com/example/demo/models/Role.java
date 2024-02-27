@@ -11,9 +11,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Category {
+public class Role {
 
     private String id;
-    private String name;
     private String description;
+    private String createdAt;
+    private String updatedAt;
 }

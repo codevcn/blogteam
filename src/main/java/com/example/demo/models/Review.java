@@ -13,8 +13,9 @@ import lombok.ToString;
 @ToString
 public class Review {
 
-    private int postID;
+    private Long postID;
     private String userID;
     private String comment;
     private String createdAt;
+    private Boolean deleted;
 }

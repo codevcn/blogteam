@@ -15,6 +15,7 @@ public class Interaction {
 
     private int postID;
     private String userID;
-    private boolean likeDislike;
+    private boolean liked;
     private String createdAt;
+    private String updatedAt;
 }

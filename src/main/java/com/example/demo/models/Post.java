@@ -13,14 +13,14 @@ import lombok.ToString;
 @ToString
 public class Post {
 
-    private int id;
+    private Long id;
     private String title;
     private String createdAt;
     private String background;
     private String userID;
     private String mainContent;
-    private boolean isPrivate;
-    private String categoryID;
-    private boolean deleted;
+    private Boolean isPrivate;
+    private String hashtag;
+    private Boolean deleted;
     private String updateAt;
 }

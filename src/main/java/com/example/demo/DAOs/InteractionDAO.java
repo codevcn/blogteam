@@ -28,14 +28,12 @@ public class InteractionDAO {
     }
 
     public int create(final @NonNull Interaction interaction) {
-        String sql =
-            "INSERT INTO " + tableName + "(postID, userID, likeDislike, createdAt)" + " VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO " + tableName + "(postID, userID, liked)" + " VALUES (?, ?, ?)";
         return jdbcTemplate.update(
             sql,
             interaction.getPostID(),
             interaction.getUserID(),
-            interaction.isLikeDislike(),
-            interaction.getCreatedAt()
+            interaction.isLiked()
         );
     }
 

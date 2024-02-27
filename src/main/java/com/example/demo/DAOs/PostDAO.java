@@ -32,7 +32,7 @@ public class PostDAO {
         String sql =
             "INSERT INTO " +
             tableName +
-            "(title, background, userID, mainContent, categoryID, isPrivate)" +
+            "(title, background, userID, mainContent, hashtag, isPrivate)" +
             " VALUES (?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(
             sql,
@@ -40,8 +40,8 @@ public class PostDAO {
             post.getBackground(),
             post.getUserID(),
             post.getMainContent(),
-            post.getCategoryID(),
-            post.isPrivate()
+            post.getHashtag(),
+            post.getIsPrivate()
         );
     }
 
