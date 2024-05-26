@@ -15,10 +15,10 @@
     --blgtm-card-border-default-cl: rgba(23, 23, 23, 0.05);
 
     /* font family */
-    --blgtm-default-fontf: "Work Sans regular", Arial, sans-serif;
-    --blgtm-poppins-bold-fontf: "Poppins bold", Arial, sans-serif;
-    --blgtm-poppins-regular-fontf: "Poppins regular", Arial, sans-serif;
+    --blgtm-default-fontf: "Work Sans", Arial, sans-serif;
+    --blgtm-poppins-bold-fontf: "Poppins", Arial, sans-serif;
+    --blgtm-poppins-regular-fontf: "Poppins", Arial, sans-serif;
     --blgtm-arial-fontf: Arial, Helvetica, sans-serif;
     --blgtm-times-new-roman-fontf: "Times New Roman", Times, serif;
-    --blgtm-roboto-regular-fontf: "Roboto regular", Times, serif;
+    --blgtm-roboto-regular-fontf: "Roboto", Times, serif;
 }

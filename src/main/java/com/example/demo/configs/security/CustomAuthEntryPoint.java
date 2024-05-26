@@ -15,16 +15,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class CustomAuthEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        AuthenticationException authException
-    ) throws IOException, ServletException {
-        String redirect_url = UriComponentsBuilder
-            .fromPath("/login")
-            .queryParam("error", URLEncoder.encode(AuthMessage.UNAUTHENTICATED_USER, "UTF-8"))
-            .build()
-            .toUriString();
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+        AuthenticationException authException) throws IOException, ServletException {
+        String redirect_url = UriComponentsBuilder.fromPath("/login")
+            .queryParam("error", URLEncoder.encode(AuthMessage.UNAUTHENTICATED_USER, "UTF-8")).build().toUriString();
 
         response.sendRedirect(redirect_url);
     }

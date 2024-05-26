@@ -33,11 +33,8 @@ public class JWTFilter extends OncePerRequestFilter {
     private CookieService cookieService;
 
     @Override
-    public void doFilterInternal(
-        @NonNull HttpServletRequest request,
-        @NonNull HttpServletResponse response,
-        @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
+    public void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+        @NonNull FilterChain filterChain) throws ServletException, IOException {
         System.out.printf("\n>>> got a request\n");
 
         String jwt = extractJWTFromRequest(request);
@@ -70,11 +67,8 @@ public class JWTFilter extends OncePerRequestFilter {
             CustomUserDetails userDetails = userDetailsService.loadUserByUsername(userId);
 
             if (jwtService.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.getAuthorities()
-                );
+                UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

@@ -20,6 +20,10 @@ a {
     text-decoration: none;
 }
 
+button {
+    border: none;
+}
+
 p,
 h1,
 h2,

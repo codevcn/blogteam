@@ -20,7 +20,9 @@ public class AdminController {
 
     @GetMapping("dashboard")
     public String dashboardPage(Model model) {
-        model.addAttribute(ClientGlobalVarNames.appName, appInfoProps.getAppName());
+        model.addAttribute(
+            ClientGlobalVarNames.appName, appInfoProps.getAppName()
+        );
         return ClientPages.AdminPages.dashboardPage;
     }
 }

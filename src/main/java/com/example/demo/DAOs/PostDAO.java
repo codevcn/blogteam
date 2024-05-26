@@ -2,10 +2,15 @@ package com.example.demo.DAOs;
 
 import com.example.demo.models.Post;
 import com.example.demo.models.joins.PostWithCategory;
+import com.example.demo.utils.exceptions.BaseException;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
@@ -28,21 +33,24 @@ public class PostDAO {
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Post.class));
     }
 
-    public int create(@NonNull Post post) {
+    public int create(@NonNull Post post) throws BaseException {
         String sql =
-            "INSERT INTO " +
-            tableName +
-            "(title, background, userID, mainContent, hashtag, isPrivate)" +
-            " VALUES (?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(
-            sql,
-            post.getTitle(),
-            post.getBackground(),
-            post.getUserID(),
-            post.getMainContent(),
-            post.getHashtag(),
-            post.getIsPrivate()
-        );
+            "INSERT INTO " + tableName + "(title, userID, hashtag, mainContent, isPrivate)" + " VALUES (?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, post.getTitle());
+            ps.setString(2, post.getUserID());
+            ps.setString(3, post.getHashtag());
+            ps.setString(4, post.getMainContent());
+            ps.setBoolean(5, post.getIsPrivate());
+            return ps;
+        }, keyHolder);
+        Number key = keyHolder.getKey();
+        if (key == null) {
+            throw new BaseException("Can't create new post");
+        }
+        return key.intValue();
     }
 
     public Post findById(int post_id) {
@@ -63,14 +71,11 @@ public class PostDAO {
 
     public List<PostWithCategory> findPostWithCategory(int post_id) {
         String sql =
-            "SELECT [posts].title, [posts].userID, [posts].categoryID, [categories].id AS mainCategoryID, [categories].[name]" +
-            " FROM [posts] INNER JOIN [categories] ON [posts].[categoryID]=[categories].[id]" +
-            " WHERE [posts].id = ?";
-        List<PostWithCategory> post = jdbcTemplate.query(
-            sql,
-            BeanPropertyRowMapper.newInstance(PostWithCategory.class),
-            post_id
-        );
+            "SELECT [posts].title, [posts].userID, [posts].categoryID, [categories].id AS mainCategoryID, [categories].[name]"
+                + " FROM [posts] INNER JOIN [categories] ON [posts].[categoryID]=[categories].[id]"
+                + " WHERE [posts].id = ?";
+        List<PostWithCategory> post =
+            jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(PostWithCategory.class), post_id);
         return post;
     }
 

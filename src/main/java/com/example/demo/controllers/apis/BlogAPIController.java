@@ -3,7 +3,9 @@ package com.example.demo.controllers.apis;
 import com.example.demo.DTOs.UtilDTOs.Success;
 import com.example.demo.DTOs.blog.CreateBlogDTO;
 import com.example.demo.services.BlogService;
+import com.example.demo.utils.exceptions.BaseException;
 import jakarta.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +22,8 @@ public class BlogAPIController {
     private BlogService blogService;
 
     @PostMapping("create")
-    public ResponseEntity<Success> createBlog(
-        @Valid @RequestBody CreateBlogDTO createBlogDTO,
-        Principal principal
-    ) {
+    public ResponseEntity<Success> createBlog(@Valid @RequestBody CreateBlogDTO createBlogDTO, Principal principal)
+        throws BaseException, IOException {
         blogService.createNewBlog(createBlogDTO, principal);
 
         return ResponseEntity.status(200).body(new Success(true));

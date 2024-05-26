@@ -17,8 +17,7 @@ public class AuthService {
     public Authentication login(LoginRequestDTO loginRequestDTO) throws AuthenticationException {
         return authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken.unauthenticated(
-                loginRequestDTO.getEmail(),
-                loginRequestDTO.getPassword()
+                loginRequestDTO.getEmail(), loginRequestDTO.getPassword()
             )
         );
     }

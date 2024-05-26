@@ -18,33 +18,38 @@ public class InteractionDAO {
 
     public int count() {
         String sql = "SELECT COUNT(*) FROM " + tableName;
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
+        Integer count = jdbcTemplate.queryForObject(
+            sql, Integer.class
+        );
         return count == null ? 0 : count;
     }
 
     public List<Interaction> findAll() {
         String sql = "SELECT * FROM " + tableName;
-        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Interaction.class));
+        return jdbcTemplate.query(
+            sql, BeanPropertyRowMapper.newInstance(
+                Interaction.class
+            )
+        );
     }
 
     public int create(final @NonNull Interaction interaction) {
         String sql = "INSERT INTO " + tableName + "(postID, userID, liked)" + " VALUES (?, ?, ?)";
         return jdbcTemplate.update(
-            sql,
-            interaction.getPostID(),
-            interaction.getUserID(),
-            interaction.isLiked()
+            sql, interaction.getPostID(), interaction.getUserID(), interaction.isLiked()
         );
     }
 
     public Interaction findOne(int post_id, String user_id) {
         String sql = "SELECT * FROM " + tableName + " WHERE postID = ? AND userID = ?";
         List<Interaction> interactions = jdbcTemplate.query(
-            sql,
-            BeanPropertyRowMapper.newInstance(Interaction.class),
-            post_id,
-            user_id
+            sql, BeanPropertyRowMapper.newInstance(
+                Interaction.class
+            ), post_id, user_id
         );
-        return interactions.size() == 0 ? null : interactions.get(0);
+        return interactions.size() == 0 ? null
+            : interactions.get(
+                0
+            );
     }
 }

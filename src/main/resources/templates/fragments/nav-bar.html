@@ -4,6 +4,11 @@
     <div class="nav-item-list">
         <a href="/" class="nav-item">Trang chủ</a>
         <a href="/contact" class="nav-item">Liên hệ</a>
-        <a href="/login" class="nav-item">Đăng nhập</a>
+        <a href="/login" class="nav-item" th:unless="${isAuthenticated}">Đăng nhập</a>
+        <a href="/account" class="nav-item account" th:if="${isAuthenticated}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+            </svg>
+        </a>
     </div>
 </div>

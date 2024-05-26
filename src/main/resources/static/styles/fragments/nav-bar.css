@@ -21,7 +21,7 @@
     padding-bottom: 0.9rem;
     padding-left: 20px;
     padding-right: 20px;
-    font-weight: bold;
+    font-weight: 500;
     cursor: pointer;
     position: relative;
 }
@@ -36,6 +36,11 @@
     bottom: -5%;
     transform: scaleX(0);
     transition: transform 0.2s;
+}
+
+.nav-bar .nav-item.account svg {
+    height: 1.3rem;
+    width: 1.3rem;
 }
 
 .nav-bar .nav-item:hover::after {

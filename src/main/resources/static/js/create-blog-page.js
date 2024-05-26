@@ -2,13 +2,16 @@ const font_families_for_quilljs = ["Arial", "Roboto", "Times-New-Roman", "Poppin
 const font_sizes_for_quilljs = ["11px", "14px", "18px", "24px", "30px"];
 
 // init elements that usable right away
-const letters_counter_ele = document.getElementById("editor-counter");
-const main_content_ele = document.getElementById("quill-editor");
-const blog_title_ele = document.querySelector(".editor-container .add-title");
+const pageMain = document.querySelector("#page-main");
+const letters_counter = pageMain.querySelector(".publish-blog-container .editor-counter-container .editor-counter");
+const blog_main_content = document.getElementById("quill-editor");
+const blog_title = pageMain.querySelector(".editor-container .add-title"); //textarea
+const blog_hashtag = pageMain.querySelector(".editor-container .add-hashtag input");
+const publishBlogBtn = pageMain.querySelector(".publish-blog-container .publish-blog-btn");
 
 const quill_editor_options = {
     theme: "snow",
-    placeholder: "Viết nội dung của bạn...",
+    placeholder: "Viết nội dung cho bài đăng của bạn...",
     modules: {
         toolbar: "#quill-toolbar",
         history: {
@@ -33,17 +36,27 @@ Quill.register(SizeAttributor, true);
 const quill = new Quill("#quill-editor", quill_editor_options);
 
 // letters counter
-const count_letters_in_editor = () => quill.getText().length;
+const count_letters_in_editor = () => blog_main_content.querySelector(".ql-editor").innerHTML.length;
 
-quill.on(Quill.events.TEXT_CHANGE, function letters_counter() {
-    letters_counter_ele.innerText = count_letters_in_editor() - 1;
+quill.on(Quill.events.TEXT_CHANGE, function lettersCounter() {
+    const content_length = count_letters_in_editor();
+    if (content_length > max_content_letters_count) {
+        if (!letters_counter.classList.contains("invalid")) {
+            letters_counter.classList.add("invalid");
+        }
+    } else {
+        letters_counter.classList.remove("invalid");
+    }
+    if (quill.getText().length === 1) {
+        letters_counter.innerText = `0 / ${max_content_letters_count}`;
+    } else {
+        letters_counter.innerText = `${content_length - 1} / ${max_content_letters_count}`;
+    }
 });
 
 // add tooltip to toolbar formats
 const add_tooltip_to_buttons = (tooltip_element, hidden_class) => {
-    const format_buttons = document.querySelectorAll(
-        ".editor-container .ql-toolbar.ql-snow .ql-formats button"
-    );
+    const format_buttons = document.querySelectorAll(".editor-container .ql-toolbar.ql-snow .ql-formats button");
     if (format_buttons.length === 0) return;
 
     for (const button of format_buttons) {
@@ -106,9 +119,8 @@ const validate_content_letters_count = () => {
         );
     }
 };
-
 const validate_title_letters_count = () => {
-    const title_length = blog_title_ele.value.length;
+    const title_length = blog_title.value.length;
     if (title_length < min_title_letters_count || title_length > max_title_letters_count) {
         throw new Error(
             "Tiêu đề phải có số lượng kí tự trong khoảng từ " +
@@ -119,29 +131,28 @@ const validate_title_letters_count = () => {
         );
     }
 };
+const validate_hashtag_letters_count = () => {
+    const hashtag_length = blog_hashtag.value.length;
+    if (hashtag_length < min_hashtag_letters_count || hashtag_length > max_hashtag_letters_count) {
+        throw new Error(
+            "Hashtag phải có số lượng kí tự trong khoảng từ " +
+                min_hashtag_letters_count +
+                " đến " +
+                max_hashtag_letters_count +
+                " kí tự!"
+        );
+    }
+};
 
 const validate_blog = () => {
     validate_title_letters_count();
     validate_content_letters_count();
+    validate_hashtag_letters_count();
 };
 
 // request create blog
-const create_blog = (blog) => {
-    fetch(create_blog_api, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(blog),
-        credentials: "include",
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(">>> Server response >>>", data);
-        })
-        .catch((error) => {
-            console.error(">>> Create blog error >>>", error);
-        });
+const create_blog = async (data) => {
+    return await axios.post(create_blog_api, data, { withCredentials: true });
 };
 
 // publish blog hanlder
@@ -155,12 +166,27 @@ const submit_publish_blog = async () => {
         }
     }
 
-    const main_content = main_content_ele.querySelector(".ql-editor");
-    const blog_title = blog_title_ele.value;
+    const blogMainContent = blog_main_content.querySelector(".ql-editor");
+    const blogTitle = blog_title.value;
+    const blogHashtag = blog_hashtag.value;
 
-    create_blog({
-        title: blog_title,
-        mainContent: main_content.innerHTML,
-        categoryID: "ooo-vcn",
-    });
+    publishBlogBtn.innerHTML = `
+        <div class="spinner-border spinner" role="status">
+            <span class="sr-only"></span>
+        </div>`;
+
+    try {
+        await create_blog({
+            title: blogTitle,
+            mainContent: blogMainContent.innerHTML,
+            hashtag: blogHashtag,
+        });
+        toastify.success({ title: "Thành công", msg: "Xuất bản bài đăng thành công!" });
+        window.location.href = "/account";
+    } catch (error) {
+        toastify.error({ title: "Xuất bản bài đăng thất bại", msg: error.message });
+        return;
+    }
+
+    publishBlogBtn.innerHTML = `Xuất bản`;
 };

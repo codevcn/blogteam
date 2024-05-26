@@ -1,15 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link th:href="@{/styles/global/global.css}" rel="stylesheet" />
-        <link th:href="@{/styles/fragments/fragments.css}" rel="stylesheet" />
-        <link th:href="@{/styles/libs/SweetAlert2.css}" rel="stylesheet" />
-        <link th:href="@{/styles/account-page.css}" rel="stylesheet" />
-        <title>[[${appName}]]</title>
-    </head>
-    <body>
-        <div>account</div>
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link th:href="@{/styles/libs/SweetAlert2.css}" rel="stylesheet" />
+    <link th:href="@{/styles/libs/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/styles/global/global.css}" rel="stylesheet" />
+    <link th:href="@{/styles/fragments/fragments.css}" rel="stylesheet" />
+    <link th:href="@{/styles/account-page.css}" rel="stylesheet" />
+    <title>[[${appName}]]</title>
+</head>
+
+<body>
+    <div th:replace="~{fragments/nav-bar.html :: nav-bar}"></div>
+
+    <main id="page-main">
+        <section class="nav-and-main-content">
+            <div class="user-nav-side-bar">
+                <button class="nav-item logout" onclick="logoutUserHandler(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-box-arrow-right"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+                        <path fill-rule="evenodd"
+                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                    </svg>
+                    <span>Đăng xuất</span>
+                </button>
+            </div>
+            <div class="main-content-container">a</div>
+        </section>
+
+        <script th:src="@{/js/libs/SweetAlert2.js}" charset="UTF-8" defer></script>
+        <script th:src="@{/js/libs/bootstrap.min.js}" charset="UTF-8" defer></script>
+        <script th:src="@{/js/libs/popper.min.js}" charset="UTF-8" defer></script>
+        <script th:src="@{/js/libs/axios.min.js}" charset="UTF-8" defer></script>
+        <script th:src="@{/js/utils/constants.js}" charset="UTF-8" defer></script>
+        <script th:src="@{/js/utils/apis.js}" charset="UTF-8" defer></script>
+        <script th:src="@{/js/utils/helpers.js}" charset="UTF-8" defer></script>
+        <script th:src="@{/js/account-page.js}" charset="UTF-8" defer></script>
+    </main>
+</body>
+
 </html>

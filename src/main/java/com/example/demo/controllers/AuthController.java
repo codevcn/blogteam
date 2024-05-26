@@ -46,35 +46,26 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public String login(
-        @NonNull @Valid LoginRequestDTO loginRequestDTO,
-        BindingResult bindingResult,
-        Model model,
-        @NonNull HttpServletResponse response
-    ) {
+    public String login(@NonNull @Valid LoginRequestDTO loginRequestDTO, BindingResult bindingResult, Model model,
+        @NonNull HttpServletResponse response) {
         model.addAttribute(ClientGlobalVarNames.appName, appInfoProps.getAppName());
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute(
-                ClientGlobalVarNames.error,
-                bindingResult.getAllErrors().get(0).getDefaultMessage()
-            );
+            model.addAttribute(ClientGlobalVarNames.error, bindingResult.getAllErrors().get(0).getDefaultMessage());
             return ClientPages.loginPage;
         }
 
         try {
             authService.login(loginRequestDTO);
         } catch (AuthenticationException exception) {
-            model.addAttribute(
-                ClientGlobalVarNames.error,
-                "Đăng nhập thất bại, sai tên người dùng hoặc mật khẩu (" + exception.getMessage() + ")"
-            );
+            model.addAttribute(ClientGlobalVarNames.error,
+                "Đăng nhập thất bại, sai tên người dùng hoặc mật khẩu (" + exception.getMessage() + ")");
             return ClientPages.loginPage;
         }
 
         String jwt = jwtService.generateToken(loginRequestDTO.getEmail());
 
-        cookieService.setCookieAtClient(response, jwt);
+        cookieService.setJWTCookieAtClient(response, jwt);
 
         return "redirect:/account";
     }
@@ -86,19 +77,12 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public String createAccount(
-        @NonNull @Valid CreateAccountDTO createAccountDTO,
-        BindingResult bindingResult,
-        Model model,
-        @NonNull HttpServletResponse response
-    ) {
+    public String createAccount(@NonNull @Valid CreateAccountDTO createAccountDTO, BindingResult bindingResult,
+        Model model, @NonNull HttpServletResponse response) {
         model.addAttribute(ClientGlobalVarNames.appName, appInfoProps.getAppName());
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute(
-                ClientGlobalVarNames.error,
-                bindingResult.getAllErrors().get(0).getDefaultMessage()
-            );
+            model.addAttribute(ClientGlobalVarNames.error, bindingResult.getAllErrors().get(0).getDefaultMessage());
             model.addAttribute("fullName", createAccountDTO.getFullName());
             model.addAttribute("email", createAccountDTO.getEmail());
             model.addAttribute("gender", createAccountDTO.getGender());
@@ -117,14 +101,8 @@ public class AuthController {
 
         String jwt = jwtService.generateToken(createAccountDTO.getEmail());
 
-        cookieService.setCookieAtClient(response, jwt);
+        cookieService.setJWTCookieAtClient(response, jwt);
 
         return "redirect:/account";
-    }
-
-    @GetMapping("account")
-    public String accountPage(Model model) {
-        model.addAttribute(ClientGlobalVarNames.appName, appInfoProps.getAppName());
-        return ClientPages.accountPage;
     }
 }

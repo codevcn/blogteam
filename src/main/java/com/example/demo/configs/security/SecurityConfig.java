@@ -31,22 +31,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(authz ->
-                authz
-                    .requestMatchers("/styles/**", "/imgs/**", "/js/**", "/favicon.ico")
-                    .permitAll()
-                    .requestMatchers("/", "/home", "/register", "/login")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated()
-            )
+        return http.csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(
+                authz -> authz.requestMatchers("/styles/**", "/imgs/**", "/js/**", "/favicon.ico").permitAll()
+                    .requestMatchers("/", "/home", "/register", "/login").permitAll().anyRequest().authenticated())
             .exceptionHandling(exHdlng -> exHdlng.authenticationEntryPoint(customAuthEntryPoint))
-            .logout(logout -> logout.logoutUrl("/logout").permitAll().logoutSuccessUrl("/"))
             .sessionManagement(ssMgmtCt -> ssMgmtCt.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 
     @Bean

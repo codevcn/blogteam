@@ -35,12 +35,9 @@ public class ExceptionCatcher {
 
     private void logValidationException(MethodArgumentNotValidException exception) {
         System.out.printf("\n>>> run this Method Argument Not Valid Exception catcher\n");
-        exception
-            .getBindingResult()
-            .getAllErrors()
-            .forEach(error -> {
-                System.out.printf(">>> error message: %s \n", error.getDefaultMessage());
-            });
+        exception.getBindingResult().getAllErrors().forEach(error -> {
+            System.out.printf(">>> error message: %s \n", error.getDefaultMessage());
+        });
     }
 
     private void setClientErrorPageInfo(Model model, String exception_message) {
@@ -48,7 +45,7 @@ public class ExceptionCatcher {
         model.addAttribute(ClientGlobalVarNames.error, specifyErrorMessage(exception_message));
     }
 
-    @ExceptionHandler({ Exception.class })
+    @ExceptionHandler({Exception.class})
     public String handleAnyException(Exception exception, Model model) {
         logException("Any Exception", exception);
 
@@ -57,23 +54,19 @@ public class ExceptionCatcher {
         return ClientPages.internalErrorPage;
     }
 
-    @ExceptionHandler({ MethodArgumentNotValidException.class })
-    public String handleMethodArgumentNotValidException(
-        MethodArgumentNotValidException exception,
-        Model model
-    ) {
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public String handleMethodArgumentNotValidException(MethodArgumentNotValidException exception, Model model) {
         logValidationException(exception);
 
         String errorMessage =
-            "Dữ liệu đầu vào không hợp lệ: " +
-            exception.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+            "Dữ liệu đầu vào không hợp lệ: " + exception.getBindingResult().getAllErrors().get(0).getDefaultMessage();
 
         setClientErrorPageInfo(model, errorMessage);
 
         return ClientPages.internalErrorPage;
     }
 
-    @ExceptionHandler({ DataAccessException.class })
+    @ExceptionHandler({DataAccessException.class})
     public String handleDataAccessException(DataAccessException exception, Model model) {
         logException("Data Access Exception", exception);
 
@@ -82,7 +75,7 @@ public class ExceptionCatcher {
         return ClientPages.internalErrorPage;
     }
 
-    @ExceptionHandler({ RuntimeException.class })
+    @ExceptionHandler({RuntimeException.class})
     public String handleRuntimeException(RuntimeException exception, Model model) {
         logException("Runtime Exception", exception);
 
@@ -95,7 +88,7 @@ public class ExceptionCatcher {
         return ClientPages.internalErrorPage;
     }
 
-    @ExceptionHandler({ NoResourceFoundException.class })
+    @ExceptionHandler({NoResourceFoundException.class})
     public String handleNoResourceFoundException(NoResourceFoundException exception, Model model) {
         logException("No Resource Found Exception", exception);
 

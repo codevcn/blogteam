@@ -18,26 +18,48 @@ public class UserService {
 
     private String encodePassword(String original_password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode(original_password);
+        return passwordEncoder.encode(
+            original_password
+        );
     }
 
     public void createAccount(@NonNull CreateAccountDTO createAccountDTO) throws AuthException {
-        User exitingUser = findUserByEmail(createAccountDTO.getEmail());
+        User exitingUser = findUserByEmail(
+            createAccountDTO.getEmail()
+        );
         if (exitingUser != null) {
-            throw new AuthException(AuthMessage.EXISTING_EMAIL);
+            throw new AuthException(
+                AuthMessage.EXISTING_EMAIL
+            );
         }
 
         User user = new User();
-        user.setEmail(createAccountDTO.getEmail());
-        user.setFullName(createAccountDTO.getFullName());
-        user.setGender(createAccountDTO.getGender());
-        user.setPassword(encodePassword(createAccountDTO.getPassword()));
-        user.setRoleID("user");
+        user.setEmail(
+            createAccountDTO.getEmail()
+        );
+        user.setFullName(
+            createAccountDTO.getFullName()
+        );
+        user.setGender(
+            createAccountDTO.getGender()
+        );
+        user.setPassword(
+            encodePassword(
+                createAccountDTO.getPassword()
+            )
+        );
+        user.setRoleID(
+            "user"
+        );
 
-        userDAO.create(user);
+        userDAO.create(
+            user
+        );
     }
 
     public User findUserByEmail(String email) {
-        return userDAO.findById(email);
+        return userDAO.findById(
+            email
+        );
     }
 }

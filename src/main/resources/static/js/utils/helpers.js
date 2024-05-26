@@ -10,11 +10,23 @@ const toastify = {
             icon: "error",
         });
     },
-    success: ({ title, msg }) => {
+    success: ({ title, msg, html }) => {
         Swal.fire({
             title,
-            ...(html ? { text: msg } : { html }),
+            ...(html ? { html } : { text: msg }),
             icon: "success",
+        });
+    },
+    confirm: ({ title, msg }, callback) => {
+        Swal.fire({
+            title,
+            text: msg,
+            icon: "warning",
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                callback();
+            }
         });
     },
 };
