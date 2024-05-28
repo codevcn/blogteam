@@ -59,4 +59,11 @@ public class UserDAO {
             sql, user_email
         );
     }
+
+    public User findByEmail(String user_email) {
+        String sql = "SELECT * FROM " + tableName + " WHERE email = ?";
+        List<User> user = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(User.class), user_email);
+        return user.size() == 0 ? null : user.get(0);
+    }
+
 }

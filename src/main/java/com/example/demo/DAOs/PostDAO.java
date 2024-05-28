@@ -33,6 +33,15 @@ public class PostDAO {
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Post.class));
     }
 
+    public List<Post> findPostsByKeyword(String keyword) {
+        String sql =
+            "SELECT id, title, createdAt, background, userID, mainContent, isPrivate, hashtag, updateAt, deleted FROM "
+                + tableName + " WHERE deleted = 0 AND (title LIKE ? OR hashtag = ?)";
+        String likeSearchTerm = "%" + keyword + "%";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Post.class),
+            new Object[] {likeSearchTerm, keyword});
+    }
+    
     public int create(@NonNull Post post) throws BaseException {
         String sql =
             "INSERT INTO " + tableName + "(title, userID, hashtag, mainContent, isPrivate)" + " VALUES (?, ?, ?, ?, ?)";
