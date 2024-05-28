@@ -52,4 +52,9 @@ public class InteractionDAO {
                 0
             );
     }
+    
+    public int deleteById(Long post_id, String user_id) {
+        String sql = "DELETE FROM " + tableName + " WHERE postID = ? AND userID = ?";
+        return jdbcTemplate.update(sql, post_id, user_id);
+    }
 }

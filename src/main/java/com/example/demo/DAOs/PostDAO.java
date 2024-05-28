@@ -83,4 +83,23 @@ public class PostDAO {
         String sql = "DELETE FROM " + tableName + " WHERE categoryID = ?";
         return jdbcTemplate.update(sql, category);
     }
+
+    public void updateById(Long post_id, Post post) {
+        String sql = "UPDATE " + tableName + " SET title = ?" + ", hashtag = ?" + ", mainContent = ?"
+            + ", isPrivate = ?" + " WHERE id = ?";
+        jdbcTemplate.update(sql, post.getTitle(), post.getHashtag(), post.getMainContent(), post.getIsPrivate(),
+            post_id);
+    }
+
+    public int deleteById(Long post_id) {
+        String sql = "DELETE FROM " + tableName + " WHERE id = ?";
+        return jdbcTemplate.update(sql, post_id);
+    }
+
+    public Post findById(Long post_id) {
+        String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
+        List<Post> posts = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Post.class), post_id);
+        return posts.size() == 0 ? null : posts.get(0);
+    }
+
 }

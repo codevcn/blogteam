@@ -23,4 +23,6 @@ public class BlogController {
         model.addAttribute(ClientGlobalVarNames.isAuthenticated, principal != null);
         return ClientPages.createBlogPage;
     }
+
+  
 }

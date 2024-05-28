@@ -59,4 +59,12 @@ public class ReviewDAO {
             sql, post_id, user_id
         );
     }
+
+    public Review findOne(Long post_id, String user_id) {
+        String sql = "SELECT * FROM " + tableName + " WHERE postID = ? AND userID = ?";
+        List<Review> reviews =
+            jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Review.class), post_id, user_id);
+        return reviews.size() == 0 ? null : reviews.get(0);
+    }
+
 }
