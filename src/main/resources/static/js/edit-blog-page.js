@@ -3,11 +3,16 @@ const font_sizes_for_quilljs = ["11px", "14px", "18px", "24px", "30px"]
 
 // init elements that usable right away
 const pageMain = document.querySelector("#page-main")
-const letters_counter = pageMain.querySelector(".publish-blog-container .editor-counter-container .editor-counter")
+const letters_counter = pageMain.querySelector(".submit-edit-blog-container .editor-counter-container .editor-counter")
 const blog_main_content = document.getElementById("quill-editor")
 const blog_title = pageMain.querySelector(".editor-container .add-title") //textarea
 const blog_hashtag = pageMain.querySelector(".editor-container .add-hashtag input")
-const publishBlogBtn = pageMain.querySelector(".publish-blog-container .publish-blog-btn")
+const submitEditBlogBtn = pageMain.querySelector(".submit-edit-blog-container .submit-edit-blog-btn")
+const deleteBlogBtn = pageMain.querySelector(".blog-actions .blog-action.delete-blog")
+
+const setUIOfLettersCounter = async (value) => {
+    letters_counter.innerText = `${value} / ${max_content_letters_count}`
+}
 
 const quill_editor_options = {
     theme: "snow",
@@ -48,11 +53,18 @@ quill.on(Quill.events.TEXT_CHANGE, function lettersCounter() {
         letters_counter.classList.remove("invalid")
     }
     if (quill.getText().length === 1) {
-        letters_counter.innerText = `0 / ${max_content_letters_count}`
+        setUIOfLettersCounter(0)
     } else {
-        letters_counter.innerText = `${content_length - 1} / ${max_content_letters_count}`
+        setUIOfLettersCounter(content_length - 1)
     }
 })
+
+const initBlogEditor = () => {
+    const mainContent = mainContentOfBlog
+    quill.clipboard.dangerouslyPasteHTML(mainContent)
+    setUIOfLettersCounter(mainContent.length - 1)
+}
+initBlogEditor()
 
 // add tooltip to toolbar formats
 const add_tooltip_to_buttons = (tooltip_element, hidden_class) => {
@@ -158,17 +170,18 @@ const validate_blog = () => {
 }
 
 // request create blog
-const create_blog = async (data) => {
-    return await axios.post(create_blog_api, data)
+const edit_blog = async (payload) => {
+    const postId = routeParameterOfURLGetter()
+    return await axios.post(`${edit_blog_api}/${postId}`, payload)
 }
 
 // publish blog hanlder
-const submit_publish_blog = async () => {
+const submit_edit_blog = async () => {
     try {
         validate_blog()
     } catch (error) {
         if (error !== null) {
-            Toastify.error({ title: "Xuất bản bài đăng thất bại", msg: error.message })
+            Toastify.error({ title: "Chỉnh sửa bài đăng thất bại", msg: error.message })
             return
         }
     }
@@ -177,22 +190,53 @@ const submit_publish_blog = async () => {
     const blogTitle = blog_title.value
     const blogHashtag = blog_hashtag.value
 
-    publishBlogBtn.innerHTML = `
+    submitEditBlogBtn.innerHTML = `
         <div class="spinner-border spinner" role="status">
             <span class="sr-only"></span>
         </div>`
 
+    let success = false
     try {
-        await create_blog({
+        await edit_blog({
             title: blogTitle,
             mainContent: blogMainContent.innerHTML,
-            hashtag: blogHashtag
+            hashtag: blogHashtag,
+            isPrivate: 0
         })
-        window.location.href = "/blog/my-posts"
+        success = true
     } catch (error) {
-        Toastify.error({ title: "Xuất bản bài đăng thất bại", msg: error.message })
-        return
+        const err = APIErrorHandler.handleError(error)
+        Toastify.error({ title: "Chỉnh sửa bài đăng thất bại", msg: err.message })
     }
 
-    publishBlogBtn.innerHTML = `Xuất bản`
+    if (success) {
+        Toastify.success({ title: "Thành công", msg: "Chỉnh sửa bài đăng thành công!" })
+    }
+    submitEditBlogBtn.innerHTML = `Xuất bản`
+}
+
+const deleteBlogHandler = async () => {
+    Toastify.confirm({ title: "Xác nhận xóa", msg: "Bạn xác nhận sẽ xóa bài đăng này?" }, async () => {
+        const postId = routeParameterOfURLGetter()
+        let success = false
+        deleteBlogBtn.innerHTML = getHTMLSpinner()
+        try {
+            await axios.delete(`${delete_blog_api}/${postId}`)
+            success = true
+        } catch (error) {
+            const err = APIErrorHandler.handleError(error)
+            Toastify.error({ title: "Xóa bài đăng thất bại", msg: err.message })
+            deleteBlogBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path
+                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                    <path
+                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                </svg>
+                <span>Xóa bài đăng</span>`
+        }
+        if (success) {
+            redirectAfterMs("/account", 500)
+        }
+    })
 }

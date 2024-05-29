@@ -74,13 +74,6 @@
             </div>
 
             <div id="quill-editor"></div>
-
-            <div class="tips">
-                <div class="publish-tips"></div>
-                <div class="title-tips"></div>
-                <div class="tag-tips"></div>
-                <div class="main-content-tips"></div>
-            </div>
         </div>
 
         <div class="publish-blog-container">
@@ -90,9 +83,9 @@
             <button class="publish-blog-btn" onclick="submit_publish_blog()">Xuất bản</button>
         </div>
 
-        <button class="close-editor-btn">
+        <a class="close-editor-btn" href="/account">
             <svg th:replace="~{fragments/icons.html :: close-icon}"></svg>
-        </button>
+        </a>
     </main>
 
     <script th:src="@{/js/libs/QuillJS.js}" charset="UTF-8" defer></script>
