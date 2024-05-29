@@ -71,4 +71,8 @@ public class UserDAO {
         jdbcTemplate.update(sql, user.getPassword(), user.getEmail());
     }
 
+    public void updateById(User user) {
+        String sql = "UPDATE " + tableName + " SET fullName = ?" + ", gender = ?" + " WHERE email = ?";
+        jdbcTemplate.update(sql, user.getFullName(), user.getGender(), user.getEmail());
+    }
 }

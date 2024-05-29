@@ -7,4 +7,7 @@ public class UtilDTOs {
     public record SearchPost(Long id, String title, String createdAt, String background, User user, String mainContent,
         Boolean isPrivate, String hashtag, Boolean deleted, String updateAt) {
     }
+
+    public record Result(boolean error, boolean success, String message) {
+    }
 }

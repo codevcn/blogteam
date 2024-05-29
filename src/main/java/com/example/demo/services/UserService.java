@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import com.example.demo.DAOs.UserDAO;
 import com.example.demo.DTOs.auth.CreateAccountDTO;
+import com.example.demo.DTOs.user.UpdatePasswordDTO;
+import com.example.demo.DTOs.user.UpdatePersonalInfoDTO;
 import com.example.demo.models.User;
 import com.example.demo.utils.exceptions.AuthException;
 import com.example.demo.utils.messages.AuthMessage;
@@ -61,5 +63,20 @@ public class UserService {
         return userDAO.findById(
             email
         );
+    }
+
+    public void updatePassword(String userId, UpdatePasswordDTO updatePasswordDTO) {
+        User user = new User();
+        user.setPassword(encodePassword(updatePasswordDTO.getNewPassword()));
+        user.setEmail(userId);
+        userDAO.updatePassword(user);
+    }
+
+    public void updateProfile(String userId, UpdatePersonalInfoDTO updateProfileDTO) {
+        User user = new User();
+        user.setEmail(userId);
+        user.setFullName(updateProfileDTO.getFullName());
+        user.setGender(updateProfileDTO.getGender());
+        userDAO.updateById(user);
     }
 }

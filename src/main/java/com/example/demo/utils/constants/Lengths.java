@@ -9,4 +9,7 @@ public class Lengths {
     public static final int minLengthOfTitleBlog = 2;
     public static final int minLengthOfPassword = 4;
     public static final int maxLengthOfPassword = 50;
+    public static final int minLengthOfCommentBlog = 2;
+    public static final int maxLengthOfCommentBlog = 1000;
+    
 }

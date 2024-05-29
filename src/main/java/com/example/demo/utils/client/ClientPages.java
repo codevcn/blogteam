@@ -12,6 +12,7 @@ public class ClientPages {
     public static final String contactPage = "contact-page";
     public static final String createBlogPage = "create-blog-page";
     public static final String searchBlogPage = "search-blog-page";
+    public static final String profilePage = "profile-page";
 
     public class AdminPages {
 
