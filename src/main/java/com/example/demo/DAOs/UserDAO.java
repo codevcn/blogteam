@@ -66,4 +66,9 @@ public class UserDAO {
         return user.size() == 0 ? null : user.get(0);
     }
 
+    public void updatePassword(User user) {
+        String sql = "UPDATE " + tableName + " SET password = ?" + " WHERE email = ?";
+        jdbcTemplate.update(sql, user.getPassword(), user.getEmail());
+    }
+
 }

@@ -23,5 +23,12 @@ public class BlogController {
         model.addAttribute(ClientGlobalVarNames.isAuthenticated, principal != null);
         return ClientPages.createBlogPage;
     }
+
+    @GetMapping("search")
+    public String searchBlogPage(Model model, Principal principal) {
+        model.addAttribute(ClientGlobalVarNames.appName, appInfoProps.getAppName());
+        model.addAttribute(ClientGlobalVarNames.isAuthenticated, principal != null);
+        return ClientPages.searchBlogPage;
+    }
 }
 
